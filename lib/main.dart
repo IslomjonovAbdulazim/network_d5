@@ -1,9 +1,6 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-import 'pages/post_page.dart';
+import 'package:network_d5/pages/post_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +11,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
@@ -33,7 +30,12 @@ class HomePage extends StatelessWidget {
           children: [
             CupertinoButton(
               onPressed: () {
-                Get.to(PostPage());
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PostPage(),
+                  ),
+                );
               },
               child: Text("Posts"),
             ),

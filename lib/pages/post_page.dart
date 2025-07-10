@@ -22,21 +22,27 @@ class _PostPageState extends State<PostPage> {
   }
 
   void load() async {
-    isLoading = true;
-    setState(() {});
-    final response = await http.get(
-      Uri.parse("https://jsonplaceholder.typicode.com/posts"),
-      headers: {
-        "Accept": "application/json",
-      },
-    );
-    if (response.statusCode == 200) {
-      final body = jsonDecode(response.body);
-      final list = List.from(body);
-      posts = list.map((j) => PostModel.fromJson(j)).toList();
+    setState(() => isLoading = true);
+    try {
+      final uri = Uri.parse('https://jsonplaceholder.typicode.com/posts');
+      final response = await http.get(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+      if (response.statusCode == 200) {
+        final body = jsonDecode(response.body);
+        final list = List.from(body);
+        posts = list.map((j) => PostModel.fromJson(j)).toList();
+      } else {
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Exception: $e');
+    } finally {
+      setState(() => isLoading = false);
     }
-    isLoading = false;
-    setState(() {});
   }
 
   @override
