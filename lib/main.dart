@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:network_d5/pages/album_page.dart';
 import 'package:network_d5/pages/post_page.dart';
 
 void main() {
@@ -38,6 +39,17 @@ class HomePage extends StatelessWidget {
                 );
               },
               child: Text("Posts"),
+            ),
+            CupertinoButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AlbumPage(),
+                  ),
+                );
+              },
+              child: Text("Albums"),
             ),
           ],
         ),

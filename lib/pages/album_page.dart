@@ -2,17 +2,17 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:network_d5/models/post_model.dart';
+import 'package:network_d5/models/album_model.dart';
 
-class PostPage extends StatefulWidget {
-  const PostPage({super.key});
+class AlbumPage extends StatefulWidget {
+  const AlbumPage({super.key});
 
   @override
-  State<PostPage> createState() => _PostPageState();
+  State<AlbumPage> createState() => _AlbumPageState();
 }
 
-class _PostPageState extends State<PostPage> {
-  List<PostModel> posts = [];
+class _AlbumPageState extends State<AlbumPage> {
+  List<AlbumModel> albums = [];
   bool isLoading = false;
 
   @override
@@ -24,17 +24,13 @@ class _PostPageState extends State<PostPage> {
   void load() async {
     isLoading = true;
     setState(() {});
-    final uri = Uri.parse('https://cors-anywhere.herokuapp.com/https://jsonplaceholder.typicode.com/posts');
-    final response = await http.get(
-      uri,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
+    final uri = Uri.parse(
+        "https://cors-anywhere.herokuapp.com/https://jsonplaceholder.typicode.com/albums");
+    final response = await http.get(uri);
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
       final list = List.from(body);
-      posts = list.map((j) => PostModel.fromJson(j)).toList();
+      albums = list.map((j) => AlbumModel.fromJson(j)).toList();
     }
     isLoading = false;
     setState(() {});
@@ -48,13 +44,10 @@ class _PostPageState extends State<PostPage> {
         backgroundColor: Colors.white,
       ),
       body: ListView.builder(
-        itemCount: posts.length,
+        itemCount: albums.length,
         itemBuilder: (context, index) {
-          final model = posts[index];
-          return ListTile(
-            title: Text(model.title),
-            subtitle: Text(model.body),
-          );
+          final model = albums[index];
+          return ListTile(title: Text(model.title));
         },
       ),
     );
